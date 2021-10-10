@@ -1,0 +1,102 @@
+<html>
+
+<body>
+
+<div id="divUi">
+
+	<h3>QR Code Generator</h3>
+
+	<label>Version:</label>
+	<select id="selectVersion">
+		<option>1</option>
+		<option>3</option>
+	</select>
+	<br />
+
+	<label>Error Correction Level:</label>
+	<select id="selectErrorCorrectionLevelId">
+		<option value="0">Low</option>
+		<option value="1">Medium</option>
+		<option value="2">Quartile</option>
+		<option value="3" selected>High</option>
+	</select>
+	<br />
+
+	<label>Mask:</label>
+	<select id="selectMaskId">
+		<option value="0">Vertical</option>
+		<option value="1">Diagonal</option>
+		<option value="2">Checkerboard</option>
+		<option value="3" selected>Horizontal</option>
+		<option value="4">Eye</option>
+		<option value="5">Houndstooth</option>
+		<option value="6">Rectangular</option>
+		<option value="7">BoxWithStar</option>
+	</select>
+	<br />
+
+	<label>Data:</label>
+	<br />
+	<input id="inputData" value="www.wikipedia.org"></input>
+	<br />
+
+	<button onclick="buttonGenerate_Clicked();">Generate</button>
+	<br />
+
+	<label>Output:</label>
+	<br />
+	<div id="divOutput" style="border:1px solid"></div>
+
+</div>
+
+<script type="text/javascript">
+
+// UI event handlers.
+
+function buttonGenerate_Clicked()
+{
+	var d = document;
+
+	var selectVersion = d.getElementById("selectVersion");
+	var versionId = parseInt(selectVersion.value);
+
+	var selectErrorCorrectionLevelId =
+		d.getElementById("selectErrorCorrectionLevelId");
+	var ErrorCorrectionLevelId =
+		parseInt(selectErrorCorrectionLevelId.value);
+
+	var selectMaskId = d.getElementById("selectMaskId");
+	var maskId = parseInt(selectMaskId.value);
+
+	var inputData = d.getElementById("inputData");
+	var dataAsString = inputData.value;
+
+	var qrCode = new QrCode
+	(
+		versionId,
+		ErrorCorrectionLevelId,
+		maskId,
+		dataAsString
+	);
+
+	var qrCodeAsCanvas = qrCode.toCanvas();
+
+	var divOutput = d.getElementById("divOutput");
+	divOutput.innerHTML = "";
+	divOutput.appendChild(qrCodeAsCanvas);
+
+}
+
+</script>
+
+<script type="text/javascript" src="Coords.js"></script>
+<script type="text/javascript" src="QrCode.js"></script>
+<script type="text/javascript" src="QrCodeByteRegion.js"></script>
+<script type="text/javascript" src="QrCodeByteRegionShape.js"></script>
+<script type="text/javascript" src="QrCodeCellMask.js"></script>
+<script type="text/javascript" src="QrCodeCharacterEncoding.js"></script>
+<script type="text/javascript" src="QrCodeErrorCorrectionLevel.js"></script>
+<script type="text/javascript" src="QrCodeVersion.js"></script>
+
+</body>
+</html>
